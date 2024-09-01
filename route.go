@@ -2,6 +2,7 @@ package main
 
 import (
 	"dormitory-management/controllers/auth"
+	"dormitory-management/controllers/initial"
 	"github.com/XiaoLFeng/go-gin-util/bmiddle"
 	"github.com/gin-gonic/gin"
 )
@@ -15,6 +16,12 @@ func Route(r *gin.Engine) *gin.Engine {
 	authGroup := r.Group("/auth")
 	{
 		authGroup.GET("/login", auth.Login)
+	}
+
+	// 初始化路由表
+	initGroup := r.Group("/initial")
+	{
+		initGroup.GET("/mode", initial.Initial)
 	}
 
 	// 无路由匹配路由

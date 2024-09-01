@@ -19,5 +19,5 @@ type Log struct {
 	LogUUID    uuid.UUID `json:"log_uuid" gorm:"primaryKey;type:uuid;not null"`
 	User       string    `json:"user" gorm:"type:varchar(255);not null"`
 	Log        string    `json:"log" gorm:"type:text;not null"`
-	RecordTime time.Time `json:"record_time" gorm:"type:timestamp;not null"`
+	RecordTime time.Time `json:"record_time" gorm:"type:timestamp;not null;default:CURRENT_TIMESTAMP;"`
 }

@@ -1,6 +1,9 @@
 package entity
 
-import "time"
+import (
+	"github.com/google/uuid"
+	"time"
+)
 
 // User
 //
@@ -15,7 +18,7 @@ import "time"
 //   - CreatedAt: 创建时间
 //   - UpdatedAt: 更新时间
 type User struct {
-	UUID      string    `json:"uuid" gorm:"primaryKey;type:uuid;not null"`
+	UUID      uuid.UUID `json:"uuid" gorm:"primaryKey;type:uuid;not null"`
 	Username  string    `json:"username" gorm:"type:varchar(20);not null"`
 	Password  string    `json:"password" gorm:"type:varchar(100);not null"`
 	CreatedAt time.Time `json:"created_at" gorm:"type:timestamp;default:CURRENT_TIMESTAMP;not null"`
