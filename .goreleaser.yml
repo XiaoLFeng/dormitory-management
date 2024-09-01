@@ -5,18 +5,60 @@ before:
     - go mod tidy
 
 builds:
-  - binary: dormitory-management
+  - id: linux_amd64
+    binary: dormitory-management
     main: .
     env:
       - CGO_ENABLED=1
-      - CC=aarch64-linux-gnu-gcc
-      - CXX=aarch64-linux-gnu-g++
+      - CC=x86_64-linux-gnu-gcc   # 为 x86_64 (amd64) 架构指定 GCC 编译器
+      - CXX=x86_64-linux-gnu-g++  # 为 x86_64 (amd64) 架构指定 G++ 编译器
     goos:
       - linux
+    goarch:
+      - amd64
+
+  - id: linux_arm64
+    binary: dormitory-management
+    main: .
+    env:
+      - CGO_ENABLED=1
+      - CC=aarch64-linux-gnu-gcc   # 为 ARM64 架构指定 GCC 编译器
+      - CXX=aarch64-linux-gnu-g++  # 为 ARM64 架构指定 G++ 编译器
+    goos:
+      - linux
+    goarch:
+      - arm64
+
+  - id: windows_amd64
+    binary: dormitory-management
+    main: .
+    goos:
       - windows
+    goarch:
+      - amd64
+
+  - id: windows_arm64
+    binary: dormitory-management
+    main: .
+    goos:
+      - windows
+    goarch:
+      - arm64
+
+  - id: darwin_amd64
+    binary: dormitory-management
+    main: .
+    goos:
       - darwin
     goarch:
       - amd64
+
+  - id: darwin_arm64
+    binary: dormitory-management
+    main: .
+    goos:
+      - darwin
+    goarch:
       - arm64
 
 checksum:
