@@ -82,6 +82,3 @@ archives:
     builds_info:
       group: root
       owner: root
-    files:
-      - README.md
-      - LICENSE
