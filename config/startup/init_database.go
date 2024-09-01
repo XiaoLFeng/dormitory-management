@@ -20,9 +20,5 @@ func initDatabase() {
 		blog.Warn("INIT", "数据库迁移创建失败: %v", err)
 		return // 如果数据库迁移失败，直接返回
 	}
-
-	// 打印数据库连接成功信息
-	blog.Info("INIT", "数据库初始化成功")
-
 	constant.DB = db
 }
