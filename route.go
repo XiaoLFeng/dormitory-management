@@ -3,6 +3,7 @@ package main
 import (
 	"dormitory-management/controllers/auth"
 	"dormitory-management/controllers/initial"
+	"dormitory-management/controllers/school"
 	"github.com/XiaoLFeng/go-gin-util/bmiddle"
 	"github.com/gin-gonic/gin"
 )
@@ -23,6 +24,12 @@ func Route(r *gin.Engine) *gin.Engine {
 	{
 		initGroup.GET("/mode", initial.InitMode)
 		initGroup.GET("", initial.Initial)
+	}
+
+	// 校园网路由表
+	schoolGroup := r.Group("/school")
+	{
+		schoolGroup.POST("", school.AddUser)
 	}
 
 	// 无路由匹配路由
