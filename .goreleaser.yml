@@ -9,6 +9,8 @@ builds:
     main: .
     env:
       - CGO_ENABLED=1
+      - CC=aarch64-linux-gnu-gcc
+      - CXX=aarch64-linux-gnu-g++
     goos:
       - linux
       - windows
