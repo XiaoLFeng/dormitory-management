@@ -23,10 +23,8 @@ func GoRuntime() {
 	if err != nil {
 		blog.Errorf("CRON", "定时任务启动失败: %v", err)
 	}
-
 	// 记录创建的定时任务，作为后续强制关闭的依据
 	constant.RuntimeLoginSchoolNetwork = loginSchoolNetworkRuntime
-
 	// 服务启动
 	r.cron.Start()
 }

@@ -1,21 +1,29 @@
 package task
 
 import (
+	"dormitory-management/constant"
 	"dormitory-management/model/dto"
+	"dormitory-management/model/entity"
 	"encoding/json"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/XiaoLFeng/go-gin-util/blog"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"
 	"io"
+	"math/rand"
 	"net/http"
 )
 
 // dr1003({"result":0,"msg":"密码错误","ret_code":1});
 func (r *runtime) goRuntimeLoginSchoolNetwork() func() {
 	return func() {
+		var campusUser []*entity.CampusNetworkUser
+		constant.DB.Find(&campusUser)
+		if len(campusUser) == 0 {
+			blog.Debug("CRON", "用户数据为空，关闭自动校园网登录任务")
+			return
+		}
 		// 检查时间是否超过晚上 11 点或在早晨 6 点前
-
 		blog.Info("CRON", "正在检查是否需要登录校园网...")
 		resp, err := http.Get("http://10.1.99.100")
 		if err != nil {
@@ -54,11 +62,13 @@ func (r *runtime) goRuntimeLoginSchoolNetwork() func() {
 				blog.Errorf("CRON", "创建登录请求失败: %v", err)
 				return
 			}
+			// 随机获取一位用户进行登录
+			i := rand.Intn(len(campusUser))
 			query := client.URL.Query()
 			query.Add("callback", "dr1003")
 			query.Add("login_method", "1")
-			query.Add("user_account", ",0,debug@cmcc")
-			query.Add("user_password", "debug")
+			query.Add("user_account", ",0,"+campusUser[i].User+"@"+campusUser[i].Type)
+			query.Add("user_password", campusUser[i].Pass)
 			query.Add("lang", "zh")
 			client.URL.RawQuery = query.Encode()
 			blog.Trace("CRON", client.URL.String())

@@ -25,6 +25,7 @@ go.work.sum
 .env
 
 # Customer
+.idea/
 .logs/
 dormitory.db
 dormitory_management
