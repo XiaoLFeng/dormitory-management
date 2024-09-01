@@ -21,7 +21,8 @@ func Route(r *gin.Engine) *gin.Engine {
 	// 初始化路由表
 	initGroup := r.Group("/initial")
 	{
-		initGroup.GET("/mode", initial.Initial)
+		initGroup.GET("/mode", initial.InitMode)
+		initGroup.GET("", initial.Initial)
 	}
 
 	// 无路由匹配路由

@@ -12,6 +12,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Initial
+//
+// # 初始化模式
+//
+// 用于初始化默认应用，用于系统初始化时候创建默认用户
 func Initial(c *gin.Context) {
 	// 检查当前状态是否是初始化模式
 	blog.Tracef("CONT", "当前是否是初始化模式 [%v]", constant.InitialMode)
@@ -31,7 +36,7 @@ func Initial(c *gin.Context) {
 		// 更新初始化模式
 		var getInfo *entity.Info
 		constant.DB.First(&getInfo, "key = ?", "system_initial_mode")
-		getInfo.Value = "true"
+		getInfo.Value = "false"
 		constant.DB.Save(getInfo)
 		constant.InitialMode = false
 		bresult.Ok(c, "初始化完成")
