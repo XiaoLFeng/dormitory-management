@@ -4,7 +4,7 @@ go 1.22.2
 
 require (
 	github.com/PuerkitoBio/goquery v1.9.2
-	github.com/XiaoLFeng/go-general-utils v1.0.0-20240831162404
+	github.com/XiaoLFeng/go-general-utils v1.0.0-20240902034138
 	github.com/XiaoLFeng/go-gin-util v1.0.0-20240901083325
 	github.com/gin-gonic/gin v1.10.0
 	github.com/google/uuid v1.6.0

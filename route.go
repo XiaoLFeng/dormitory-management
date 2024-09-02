@@ -28,7 +28,8 @@ func Route(r *gin.Engine) *gin.Engine {
 		{
 			authGroup.Use(handler.CheckHasInitModeMiddleware())
 			authGroup.POST("/login", auth.Login)
-			//authGroup.GET("/logout", auth.Logout)
+			authGroup.POST("/register", auth.Register)
+			authGroup.GET("/logout", auth.Logout)
 		}
 		// 校园网路由表
 		schoolGroup := api.Group("/school")
