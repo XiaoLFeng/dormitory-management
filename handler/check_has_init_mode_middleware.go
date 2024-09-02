@@ -16,6 +16,7 @@ func CheckHasInitModeMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if constant.InitialMode {
 			_ = c.Error(berror.New(bcode.ForbiddenAccessDenied, "当前系统出于初始化模式，请先进行初始化"))
+			c.Abort()
 			return
 		}
 		c.Next()

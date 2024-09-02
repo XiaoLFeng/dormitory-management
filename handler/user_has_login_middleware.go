@@ -21,6 +21,7 @@ func UserHasLoginMiddleware() gin.HandlerFunc {
 		userToken := butil.TokenRemoveBearer(c.GetHeader("Authorization"))
 		if userToken == "" {
 			_ = c.Error(berror.New(bcode.ForbiddenAccessDenied, "用户未登录"))
+			c.Abort()
 			return
 		}
 		// 将令牌转换为 UUID 格式
@@ -29,12 +30,14 @@ func UserHasLoginMiddleware() gin.HandlerFunc {
 		constant.DB.First(&getToken, "token_uuid = ?", tokenUUID)
 		if getToken.TokenUUID == uuid.Nil {
 			_ = c.Error(berror.New(bcode.ForbiddenAccessDenied, "用户未登录"))
+			c.Abort()
 			return
 		}
 		// 检查是否过期
 		if getToken.ExpiredAt.Before(time.Now()) {
 			_ = c.Error(berror.New(bcode.ForbiddenAccessDenied, "用户登录已过期"))
 			constant.DB.Delete(&getToken)
+			c.Abort()
 			return
 		}
 		c.Next()
