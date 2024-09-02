@@ -20,7 +20,7 @@ func (i *Init) initDatabase() {
 		return // 如果数据库初始化失败，直接返回，避免后续代码执行
 	}
 
-	err = db.AutoMigrate(&entity.User{}, &entity.CampusNetworkUser{}, &entity.Log{}, &entity.Info{})
+	err = db.AutoMigrate(&entity.User{}, &entity.CampusNetworkUser{}, &entity.Log{}, &entity.Info{}, &entity.Token{})
 	if err != nil {
 		blog.Warn("INIT", "数据库迁移创建失败: %v", err)
 		return // 如果数据库迁移失败，直接返回

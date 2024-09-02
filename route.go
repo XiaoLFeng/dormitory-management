@@ -4,6 +4,7 @@ import (
 	"dormitory-management/controllers/auth"
 	"dormitory-management/controllers/initial"
 	"dormitory-management/controllers/school"
+	"dormitory-management/handler"
 	"github.com/XiaoLFeng/go-gin-util/bmiddle"
 	"github.com/gin-gonic/gin"
 )
@@ -13,23 +14,29 @@ func Route(r *gin.Engine) *gin.Engine {
 	r.Use(bmiddle.CrossDomainClearingMiddleware())
 	r.Use(bmiddle.ReturnResultMiddleware())
 
-	// 登录路由表
-	authGroup := r.Group("/auth")
+	// APIv1 路由
+	api := r.Group("/api/v1")
 	{
-		authGroup.GET("/login", auth.Login)
-	}
-
-	// 初始化路由表
-	initGroup := r.Group("/initial")
-	{
-		initGroup.GET("/mode", initial.InitMode)
-		initGroup.GET("", initial.Initial)
-	}
-
-	// 校园网路由表
-	schoolGroup := r.Group("/school")
-	{
-		schoolGroup.POST("", school.AddUser)
+		// 初始化路由表
+		initGroup := api.Group("/initial")
+		{
+			initGroup.GET("/mode", initial.InitMode)
+			initGroup.GET("", initial.Initial)
+		}
+		// 登录路由表
+		authGroup := api.Group("/auth")
+		{
+			authGroup.Use(handler.CheckHasInitModeMiddleware())
+			authGroup.POST("/login", auth.Login)
+			//authGroup.GET("/logout", auth.Logout)
+		}
+		// 校园网路由表
+		schoolGroup := api.Group("/school")
+		{
+			schoolGroup.Use(handler.CheckHasInitModeMiddleware())
+			schoolGroup.Use(handler.UserHasLoginMiddleware())
+			schoolGroup.POST("", school.AddUser)
+		}
 	}
 
 	// 无路由匹配路由
