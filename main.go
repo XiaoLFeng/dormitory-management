@@ -2,6 +2,7 @@ package main
 
 import (
 	"dormitory-management/config/startup"
+	"dormitory-management/route"
 	"dormitory-management/task"
 	"github.com/XiaoLFeng/go-gin-util/bconfig"
 	"github.com/gin-gonic/gin"
@@ -21,7 +22,7 @@ func main() {
 
 	// 启动服务
 	r := gin.Default()
-	r = Route(r)
+	r = route.Route(r)
 
 	err := r.Run(":8080")
 	if err != nil {

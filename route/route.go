@@ -1,8 +1,9 @@
-package main
+package route
 
 import (
 	"dormitory-management/controllers/auth"
 	"dormitory-management/controllers/initial"
+	"dormitory-management/controllers/invitation"
 	"dormitory-management/controllers/school"
 	"dormitory-management/handler"
 	"github.com/XiaoLFeng/go-gin-util/bmiddle"
@@ -31,12 +32,21 @@ func Route(r *gin.Engine) *gin.Engine {
 			authGroup.POST("/register", auth.Register)
 			authGroup.GET("/logout", auth.Logout)
 		}
-		// 校园网路由表
-		schoolGroup := api.Group("/school")
+		// 需要登录
+		needLogin := api.Group("")
 		{
-			schoolGroup.Use(handler.CheckHasInitModeMiddleware())
-			schoolGroup.Use(handler.UserHasLoginMiddleware())
-			schoolGroup.POST("", school.AddUser)
+			needLogin.Use(handler.CheckHasInitModeMiddleware())
+			needLogin.Use(handler.UserHasLoginMiddleware())
+			// 校园网路由表
+			schoolGroup := needLogin.Group("/school")
+			{
+				schoolGroup.POST("", school.AddUser)
+			}
+			// 邀请路由表
+			inviterGroup := needLogin.Group("/inviter")
+			{
+				inviterGroup.POST("", invitation.Create)
+			}
 		}
 	}
 

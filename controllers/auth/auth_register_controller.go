@@ -45,6 +45,10 @@ func Register(c *gin.Context) {
 		Username: authRegisterVO.Username,
 		Password: butil.PasswordEncode(authRegisterVO.Password),
 	})
+	if tx.Error != nil {
+		_ = c.Error(berror.New(bcode.ServerDatabaseError, "创建用户失败"))
+		return
+	}
 	// 注册成功
 	bresult.Ok(c, "注册成功")
 }
