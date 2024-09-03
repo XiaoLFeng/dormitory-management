@@ -43,7 +43,7 @@ func Route(r *gin.Engine) *gin.Engine {
 				schoolGroup.POST("", school.AddUser)
 			}
 			// 邀请路由表
-			inviterGroup := needLogin.Group("/inviter")
+			inviterGroup := needLogin.Group("/invite")
 			{
 				inviterGroup.POST("", invitation.Create)
 			}
