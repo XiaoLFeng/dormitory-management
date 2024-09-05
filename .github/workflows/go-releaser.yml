@@ -11,7 +11,10 @@ on:
 
 jobs:
   goreleaser:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]  # 添加 macos-latest runner
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -22,22 +25,13 @@ jobs:
           go-version: 1.23
           cache: true
 
-      - name: Install Linux and Windows Toolchains
+      - name: Install Linux and Windows Toolchains (only on ubuntu-latest)
+        if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu \
             gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64 \
             gcc-mingw-w64-i686 g++-mingw-w64-i686
-
-      - name: Install osxcross (for macOS cross-compilation)
-        run: |
-          sudo apt-get install -y llvm clang make
-          git clone https://github.com/tpoechtrager/osxcross.git
-          cd osxcross
-          wget -c https://github.com/alexey-lysiuk/macos-sdk/releases/download/11.1-21A5248p/MacOSX11.1.sdk.tar.xz
-          mv MacOSX11.1.sdk.tar.xz tarballs/
-          UNATTENDED=yes OSX_VERSION_MIN=10.12 ./build.sh
-          echo "::add-path::$(pwd)/target/bin"
       
 
       - name: Install GoReleaser
