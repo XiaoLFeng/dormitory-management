@@ -42,6 +42,8 @@ func Route(r *gin.Engine) *gin.Engine {
 			schoolGroup := needLogin.Group("/school")
 			{
 				schoolGroup.POST("", school.AddUser)
+				schoolGroup.GET("/list", school.List)
+				schoolGroup.DELETE("", school.Delete)
 			}
 			// 邀请路由表
 			inviterGroup := needLogin.Group("/invite")
@@ -55,6 +57,7 @@ func Route(r *gin.Engine) *gin.Engine {
 			{
 				userGroup.GET("/current", user.Current)
 				userGroup.GET("/list", user.List)
+				userGroup.DELETE("", user.Delete)
 			}
 		}
 	}
