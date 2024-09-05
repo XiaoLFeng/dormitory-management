@@ -22,15 +22,17 @@
 import {UserOutlined} from "@ant-design/icons";
 import {JSX, useEffect, useState} from "react";
 import {UserCurrentEntity} from "../../assets/ts/model/entity/user_entity.ts";
-import {UserListAPI} from "../../assets/ts/apis/user_api.ts";
+import {UserDeleteAPI, UserListAPI} from "../../assets/ts/apis/user_api.ts";
 import {message} from "antd";
 
 export function HomeUser() {
     document.title = "筱锋の宿舍管理 - 用户";
 
     const [userList, setUserList] = useState({} as UserCurrentEntity[]);
+    const [hasDelete, setHasDelete] = useState(false);
 
     useEffect(() => {
+        setHasDelete(false);
         setTimeout(async () => {
             const getData = await UserListAPI();
             if (getData?.output === "Ok") {
@@ -39,7 +41,17 @@ export function HomeUser() {
                 message.error(getData?.error_message);
             }
         })
-    }, []);
+    }, [hasDelete]);
+
+    async function deleteUser(uuid: string) {
+        const getData = await UserDeleteAPI(uuid);
+        if (getData?.output === "Ok") {
+            message.success(`删除用户成功`);
+            setHasDelete(true);
+        } else {
+            message.error(getData?.error_message);
+        }
+    }
 
     function RangeList(): JSX.Element[] {
         let list: JSX.Element[] = [];
@@ -50,6 +62,16 @@ export function HomeUser() {
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">{userList[i].username}</td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">{new Date(userList[i].created_at).toLocaleString()}</td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">{new Date(userList[i].updated_at).toLocaleString()}</td>
+                    <td className="whitespace-nowrap px-4 py-2 text-gray-700 flex gap-3 justify-end">
+                        <button onClick={() => {}}
+                                className={"px-3 py-1 bg-blue-500 text-white rounded-md transition hover:scale-105"}>
+                            修改
+                        </button>
+                        <button onClick={() => deleteUser(userList[i].uuid)}
+                                className={"px-3 py-1 bg-red-500 text-white rounded-md transition hover:scale-105"}>
+                            删除
+                        </button>
+                    </td>
                 </tr>
             );
         }
@@ -66,12 +88,12 @@ export function HomeUser() {
                 <div className="overflow-x-auto">
                     <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm rounded-xl">
                         <thead className="text-left">
-                            <tr>
-                                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">用户序列号</th>
+                        <tr>
+                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">用户序列号</th>
                                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">用户名</th>
                                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">注册时间</th>
                                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">更新时间</th>
-                                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">操作</th>
+                                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-end">操作</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">

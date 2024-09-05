@@ -19,21 +19,22 @@
  * --------------------------------------------------------------------------------
  */
 
+import {BaseResponse} from "../model/base_response.ts";
+import {SchoolEntity} from "../model/entity/school_entity.ts";
 import {BaseApi, MethodType} from "../base_api.ts";
 import {AuthorizationUtil} from "../utils/authorization_util.ts";
-import {UserCurrentEntity} from "../model/entity/user_entity.ts";
-import {BaseResponse} from "../model/base_response.ts";
+import {SchoolAddDTO} from "../model/dto/school_add_dto.ts";
 
 /**
- * # 当前用户
- * 获取当前用户信息, 用于展示当前用户信息
+ * # 校园网账号列表
+ * 获取校园网账号列表，用于展示校园网账号列表
  *
- * @returns Promise<BaseResponse<UserCurrentEntity> | undefined>
+ * @returns Promise<BaseResponse<SchoolEntity> | undefined>
  */
-const UserCurrentAPI = (): Promise<BaseResponse<UserCurrentEntity> | undefined> => {
-    return BaseApi<UserCurrentEntity>(
+const SchoolListAPI = async (): Promise<BaseResponse<SchoolEntity[]> | undefined> => {
+    return BaseApi<SchoolEntity[]>(
         MethodType.GET,
-        "/api/v1/user/current",
+        "/api/v1/school/list",
         null,
         null,
         null,
@@ -42,38 +43,43 @@ const UserCurrentAPI = (): Promise<BaseResponse<UserCurrentEntity> | undefined> 
 }
 
 /**
- * # 用户列表
- * 获取用户列表, 用于展示用户列表
+ * # 校园网账号创建
+ * 创建一个校园网账号
  *
- * @returns Promise<BaseResponse<UserCurrentEntity[]> | undefined>
- */
-const UserListAPI = (): Promise<BaseResponse<UserCurrentEntity[]> | undefined> => {
-    return BaseApi<UserCurrentEntity[]>(
-        MethodType.GET,
-        "/api/v1/user/list",
-        null,
-        null,
-        null,
-        {"Authorization": AuthorizationUtil.getAuthorization()}
-    )
-}
-
-/**
- * # 用户删除
- * 删除用户, 用于删除用户
- *
- * @param uuid 用户 UUID
+ * @param school SchoolEntity 校园网账号信息
  * @returns Promise<BaseResponse<void> | undefined>
  */
-const UserDeleteAPI = (uuid: string): Promise<BaseResponse<void> | undefined> => {
+const SchoolCreateAPI = async (school: SchoolAddDTO): Promise<BaseResponse<void> | undefined> => {
     return BaseApi<void>(
-        MethodType.DELETE,
-        "/api/v1/user",
+        MethodType.POST,
+        "/api/v1/school",
+        school,
         null,
-        {"uuid": uuid},
         null,
         {"Authorization": AuthorizationUtil.getAuthorization()}
     )
 }
 
-export {UserCurrentAPI, UserListAPI, UserDeleteAPI}
+/**
+ * # 校园网账号删除
+ * 删除一个校园网账号
+ *
+ * @param user string 用户名
+ * @returns Promise<BaseResponse<void> | undefined>
+ */
+const SchoolDeleteAPI = async (user: string): Promise<BaseResponse<void> | undefined> => {
+    return BaseApi<void>(
+        MethodType.DELETE,
+        "/api/v1/school",
+        null,
+        {user: user},
+        null,
+        {"Authorization": AuthorizationUtil.getAuthorization()}
+    )
+}
+
+export {
+    SchoolListAPI,
+    SchoolCreateAPI,
+    SchoolDeleteAPI
+}

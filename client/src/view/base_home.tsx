@@ -30,6 +30,7 @@ import {HomeUser} from "./home/home_user.tsx";
 import {HomeInvite} from "./home/home_invite.tsx";
 import {HomeSetting} from "./home/home_setting.tsx";
 import {PageNotFounded} from "./page_not_founded.tsx";
+import { HomeSchool } from "./home/home_school.tsx";
 
 /**
  * # 基础首页
@@ -58,6 +59,7 @@ export function BaseHome() {
                         <Route path={"/"} element={<HomeIndex/>}/>
                         <Route path={"/user"} element={<HomeUser/>}/>
                         <Route path={"/invite"} element={<HomeInvite/>}/>
+                        <Route path={"/school"} element={<HomeSchool/>}/>
                         <Route path={"/setting"} element={<HomeSetting/>}/>
                         <Route path={"/*"} element={<PageNotFounded/>}/>
                     </Routes>

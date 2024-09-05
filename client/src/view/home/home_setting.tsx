@@ -19,10 +19,42 @@
  * --------------------------------------------------------------------------------
  */
 
+import {SettingOutlined} from "@ant-design/icons";
+
 export function HomeSetting() {
     return (
-        <div>
-            <h1>设置</h1>
+        <div className={"grid gap-3"}>
+            <div className={"text-2xl font-bold flex items-center gap-3"}>
+                <SettingOutlined/>
+                <span>系统设置</span>
+            </div>
+            <div className={"bg-white rounded-xl p-6 shadow-lg"}>
+                <div className={"grid grid-cols-12 gap-3"}>
+                    <div className={"col-span-12"}>
+                        <div className={"text-xl font-bold"}>自动登录设置</div>
+                        <div className={"text-gray-500"}>用于系统自动登录系统的登录配置系统</div>
+                    </div>
+                    <div className={"col-span-12 md:col-span-5"}>
+                        <label
+                            htmlFor="UserEmail"
+                            className="block overflow-hidden rounded-md border border-gray-200 px-3 py-2 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
+                        >
+                            <span className="text-xs font-medium text-gray-700"> Email </span>
+
+                            <input
+                                type="email"
+                                id="UserEmail"
+                                placeholder="anthony@rhcp.com"
+                                className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+                            />
+                        </label>
+                    </div>
+                    <div className={"col-span-12 md:col-span-7 grid justify-end"}>
+                        <div className={"text-xl font-bold"}>自动登录设置</div>
+                        <div className={"text-gray-500"}>用于系统自动登录系统的登录配置系统</div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

@@ -19,7 +19,7 @@
  * --------------------------------------------------------------------------------
  */
 
-import {HomeOutlined, LinkOutlined, SettingOutlined, UserOutlined} from "@ant-design/icons";
+import {BookOutlined, HomeOutlined, LinkOutlined, SettingOutlined, UserOutlined} from "@ant-design/icons";
 import {Link, useLocation} from "react-router-dom";
 import {AppContext} from "../assets/ts/AppContext.ts";
 import {UserCurrentEntity} from "../assets/ts/model/entity/user_entity.ts";
@@ -53,8 +53,10 @@ export function HomeHeader() {
                                 <HomeOutlined/>
                                 <span>首页</span>
                             </Link>
-                        </li>
-                        <li>
+                            <Link className={backgroundColor("/school")} to={"/school"}>
+                                <BookOutlined/>
+                                <span>账号管理</span>
+                            </Link>
                             <Link className={backgroundColor("/user")} to={"/user"}>
                                 <UserOutlined/>
                                 <span>用户管理</span>
