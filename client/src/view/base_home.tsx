@@ -19,6 +19,17 @@
  * --------------------------------------------------------------------------------
  */
 
+import {Route, Routes} from "react-router-dom";
+import {HomeIndex} from "./home/home_index.tsx";
+import {HomeHeader} from "../components/home_header.tsx";
+import {useEffect, useState} from "react";
+import {UserCurrentAPI} from "../assets/ts/apis/user_api.ts";
+import {AppContext} from "../assets/ts/AppContext.ts";
+import {UserCurrentEntity} from "../assets/ts/model/entity/user_entity.ts";
+import {HomeUser} from "./home/home_user.tsx";
+import {HomeInvite} from "./home/home_invite.tsx";
+import {HomeSetting} from "./home/home_setting.tsx";
+
 /**
  * # 基础首页
  * 这是一个基础的首页，用于展示首页内容
@@ -26,11 +37,30 @@
  * @returns React 函数组件
  */
 export function BaseHome() {
+    const [userCurrent, setUserCurrent] = useState({} as UserCurrentEntity);
+
+    // 检查用户登录信息
+    useEffect(() => {
+        setTimeout(async () => {
+            const getData = await UserCurrentAPI();
+            if (getData?.output === "Ok") {
+                setUserCurrent(getData.data!!);
+            }
+        }, 0);
+    }, []);
     return (
-        <div>
-            <p className="text-3xl font-bold underline">
-                Hello world!
-            </p>
-        </div>
+        <AppContext.Provider value={userCurrent}>
+            <div className={"flex ps-56 bg-gray-100"}>
+                <HomeHeader/>
+                <div className={"min-h-dvh w-full"}>
+                    <Routes>
+                        <Route path={"/"} element={<HomeIndex/>}/>
+                        <Route path={"/user"} element={<HomeUser/>}/>
+                        <Route path={"/invite"} element={<HomeInvite/>}/>
+                        <Route path={"/setting"} element={<HomeSetting/>}/>
+                    </Routes>
+                </div>
+            </div>
+        </AppContext.Provider>
     );
 }

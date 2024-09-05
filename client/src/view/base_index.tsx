@@ -46,7 +46,7 @@ export function BaseIndex() {
     });
     return (
         <Routes>
-            <Route path={"/"} element={<BaseHome/>}/>
+            <Route path={"/*"} element={<BaseHome/>}/>
             <Route path={"/auth/*"} element={<BaseAuth/>}/>
         </Routes>
     )
