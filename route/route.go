@@ -5,6 +5,7 @@ import (
 	"dormitory-management/controllers/initial"
 	"dormitory-management/controllers/invitation"
 	"dormitory-management/controllers/school"
+	"dormitory-management/controllers/user"
 	"dormitory-management/handler"
 	"github.com/XiaoLFeng/go-gin-util/bmiddle"
 	"github.com/gin-gonic/gin"
@@ -46,6 +47,11 @@ func Route(r *gin.Engine) *gin.Engine {
 			inviterGroup := needLogin.Group("/invite")
 			{
 				inviterGroup.POST("", invitation.Create)
+			}
+			// 用户路由表
+			userGroup := needLogin.Group("/user")
+			{
+				userGroup.GET("/current", user.Current)
 			}
 		}
 	}
