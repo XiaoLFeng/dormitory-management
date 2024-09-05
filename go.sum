@@ -4,6 +4,10 @@ github.com/XiaoLFeng/go-general-utils v1.0.0-20240902034138 h1:u7B9aDJO7SgdVT5JW
 github.com/XiaoLFeng/go-general-utils v1.0.0-20240902034138/go.mod h1:gDYscllTXsZBAqOtPbzQXUMi8zYFr4SN6NeEPvedWSM=
 github.com/XiaoLFeng/go-gin-util v1.0.0-20240901083325 h1:Gehq6fXUjhtTsy4QiFkPTf20Cf3ceBPp6NdllclLKyk=
 github.com/XiaoLFeng/go-gin-util v1.0.0-20240901083325/go.mod h1:JbVF5DXNMBHqRj3XIQEpTl0mliaJDqO3p5t9cp2tSD8=
+github.com/XiaoLFeng/go-gin-util v1.0.0-20240905071820 h1:g3X9yOfVNHdQB3HNnw2vF0HeNfsxYLk0LPk4VLxqm0s=
+github.com/XiaoLFeng/go-gin-util v1.0.0-20240905071820/go.mod h1:T/nC965H44m8BtRpOe+XTnD2rZcXYnIZ2v5vu3bvUc4=
+github.com/XiaoLFeng/go-gin-util v1.0.0-20240905072204 h1:ysJ9JZm+j9A3OZZxuh4P+tfLIbttx5tukDpxNFfoldw=
+github.com/XiaoLFeng/go-gin-util v1.0.0-20240905072204/go.mod h1:T/nC965H44m8BtRpOe+XTnD2rZcXYnIZ2v5vu3bvUc4=
 github.com/andybalholm/cascadia v1.3.2 h1:3Xi6Dw5lHF15JtdcmAHD3i1+T8plmv7BQ/nsViSLyss=
 github.com/andybalholm/cascadia v1.3.2/go.mod h1:7gtRlve5FxPPgIgX36uWBX58OdBsSS6lUvCFb+h7KvU=
 github.com/bytedance/sonic v1.12.2 h1:oaMFuRTpMHYLpCntGca65YWt5ny+wAceDERTkT2L9lg=
