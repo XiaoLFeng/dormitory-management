@@ -29,6 +29,17 @@ jobs:
             gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64 \
             gcc-mingw-w64-i686 g++-mingw-w64-i686
 
+      - name: Install osxcross (for macOS cross-compilation)
+        run: |
+          sudo apt-get install -y llvm clang make
+          git clone https://github.com/tpoechtrager/osxcross.git
+          cd osxcross
+          wget -c https://github.com/alexey-lysiuk/macos-sdk/releases/download/11.1-21A5248p/MacOSX11.1.sdk.tar.xz
+          mv MacOSX11.1.sdk.tar.xz tarballs/
+          UNATTENDED=yes OSX_VERSION_MIN=10.12 ./build.sh
+          echo "::add-path::$(pwd)/target/bin"
+      
+
       - name: Install GoReleaser
         uses: goreleaser/goreleaser-action@v5
         with:
