@@ -29,6 +29,7 @@ import {UserCurrentEntity} from "../assets/ts/model/entity/user_entity.ts";
 import {HomeUser} from "./home/home_user.tsx";
 import {HomeInvite} from "./home/home_invite.tsx";
 import {HomeSetting} from "./home/home_setting.tsx";
+import {PageNotFounded} from "./page_not_founded.tsx";
 
 /**
  * # 基础首页
@@ -52,12 +53,13 @@ export function BaseHome() {
         <AppContext.Provider value={userCurrent}>
             <div className={"flex ps-56 bg-gray-100"}>
                 <HomeHeader/>
-                <div className={"min-h-dvh w-full"}>
+                <div className={"min-h-dvh w-full p-8"}>
                     <Routes>
                         <Route path={"/"} element={<HomeIndex/>}/>
                         <Route path={"/user"} element={<HomeUser/>}/>
                         <Route path={"/invite"} element={<HomeInvite/>}/>
                         <Route path={"/setting"} element={<HomeSetting/>}/>
+                        <Route path={"/*"} element={<PageNotFounded/>}/>
                     </Routes>
                 </div>
             </div>

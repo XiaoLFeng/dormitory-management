@@ -21,19 +21,19 @@
 
 import {BaseApi, MethodType} from "../base_api.ts";
 import {AuthorizationUtil} from "../utils/authorization_util.ts";
-import {UserCurrentEntity} from "../model/entity/user_entity.ts";
+import {InviteCodeEntity} from "../model/entity/invite_entity.ts";
 import {BaseResponse} from "../model/base_response.ts";
 
 /**
- * # 当前用户
- * 获取当前用户信息, 用于展示当前用户信息
+ * # 邀请码创建
+ * 创建一个邀请码, 用于邀请其他用户加入
  *
- * @returns Promise<BaseResponse<UserCurrentEntity> | undefined>
+ * @returns Promise<BaseResponse<InviteCreateEntity> | undefined>
  */
-const UserCurrentAPI = (): Promise<BaseResponse<UserCurrentEntity> | undefined> => {
-    return BaseApi<UserCurrentEntity>(
-        MethodType.GET,
-        "/api/v1/user/current",
+const InviteCreateAPI = async (): Promise<BaseResponse<InviteCodeEntity> | undefined> => {
+    return BaseApi<InviteCodeEntity>(
+        MethodType.POST,
+        "/api/v1/invite",
         null,
         null,
         null,
@@ -42,15 +42,33 @@ const UserCurrentAPI = (): Promise<BaseResponse<UserCurrentEntity> | undefined> 
 }
 
 /**
- * # 用户列表
- * 获取用户列表, 用于展示用户列表
+ * # 邀请码删除
+ * 删除一个邀请码
  *
- * @returns Promise<BaseResponse<UserCurrentEntity[]> | undefined>
+ * @param id number 邀请码ID
+ * @returns Promise<BaseResponse<InviteCodeEntity> | undefined>
  */
-const UserListAPI = (): Promise<BaseResponse<UserCurrentEntity[]> | undefined> => {
-    return BaseApi<UserCurrentEntity[]>(
+const InviteDeleteAPI = async (id: number): Promise<BaseResponse<InviteCodeEntity> | undefined> => {
+    return BaseApi<InviteCodeEntity>(
+        MethodType.DELETE,
+        `/api/v1/invite`,
+        null,
+        {id: id},
+        null,
+        {"Authorization": AuthorizationUtil.getAuthorization()}
+    )
+}
+
+/**
+ * # 邀请码列表
+ * 获取邀请码列表
+ *
+ * @returns Promise<BaseResponse<InviteCodeEntity[]> | undefined>
+ */
+const InviteListAPI = async (): Promise<BaseResponse<InviteCodeEntity[]> | undefined> => {
+    return BaseApi<InviteCodeEntity[]>(
         MethodType.GET,
-        "/api/v1/user/list",
+        "/api/v1/invite/list",
         null,
         null,
         null,
@@ -58,4 +76,4 @@ const UserListAPI = (): Promise<BaseResponse<UserCurrentEntity[]> | undefined> =
     )
 }
 
-export {UserCurrentAPI, UserListAPI}
+export {InviteCreateAPI, InviteDeleteAPI, InviteListAPI};

@@ -38,7 +38,7 @@ export function HomeHeader() {
     }
 
     return (
-        <div className={"absolute left-0 w-56"}>
+        <div className={"fixed left-0 top-0 w-56"}>
             <div className="flex h-screen flex-col justify-between border-e bg-white">
                 <div className="px-4 py-6 textcen">
                     <div className={"flex justify-center items-center gap-2"}>
