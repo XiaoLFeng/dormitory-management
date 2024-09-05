@@ -7,18 +7,21 @@ import (
 	"dormitory-management/controllers/school"
 	"dormitory-management/controllers/user"
 	"dormitory-management/handler"
+	"embed"
 	"github.com/XiaoLFeng/go-gin-util/bmiddle"
 	"github.com/gin-gonic/gin"
+	"io/fs"
+	"net/http"
 )
 
-func Route(r *gin.Engine) *gin.Engine {
-	// 全局中间件
-	r.Use(bmiddle.CrossDomainClearingMiddleware())
-	r.Use(bmiddle.ReturnResultMiddleware())
-
+func Route(r *gin.Engine, staticFile embed.FS) *gin.Engine {
 	// APIv1 路由
 	api := r.Group("/api/v1")
 	{
+		// 全局中间件
+		api.Use(bmiddle.CrossDomainClearingMiddleware())
+		api.Use(bmiddle.ReturnResultMiddleware())
+
 		// 初始化路由表
 		initGroup := api.Group("/initial")
 		{
@@ -62,8 +65,21 @@ func Route(r *gin.Engine) *gin.Engine {
 		}
 	}
 
-	// 无路由匹配路由
-	r.NoRoute(bmiddle.NoRouteMiddleware())
+	// 无路由匹配
+	st, _ := fs.Sub(staticFile, "client/dist/assets")
+	r.StaticFS("/assets", http.FS(st))
+	r.GET("/favicon.ico", func(c *gin.Context) {
+		file, _ := staticFile.ReadFile("client/dist/favicon.ico")
+		c.Data(http.StatusOK, "image/x-icon", file)
+	})
+	r.GET("/favicon.png", func(c *gin.Context) {
+		file, _ := staticFile.ReadFile("client/dist/favicon.png")
+		c.Data(http.StatusOK, "image/png", file)
+	})
+	r.NoRoute(func(c *gin.Context) {
+		file, _ := staticFile.ReadFile("client/dist/index.html")
+		c.Data(http.StatusOK, "text/html", file)
+	})
 
 	return r
 }

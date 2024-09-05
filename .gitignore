@@ -29,4 +29,4 @@ go.work.sum
 .logs/
 dormitory.db
 dormitory_management
-dist/
+main
