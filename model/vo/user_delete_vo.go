@@ -22,5 +22,5 @@
 package vo
 
 type UserDeleteVO struct {
-	UUID uint `json:"uuid" form:"uuid" binding:"required" example:"00000000-0000-0000-0000-000000000000" description:"用户序列号"`
+	UUID string `json:"uuid" form:"uuid" binding:"required" example:"00000000-0000-0000-0000-000000000000" description:"用户序列号"`
 }

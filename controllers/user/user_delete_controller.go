@@ -39,14 +39,14 @@ import (
 //
 // 删除用户操作, 删除指定用户
 func Delete(c *gin.Context) {
-	var getQuery vo.UserDeleteVO
-	if err := c.Bind(&getQuery); err != nil {
+	var deleteVO vo.UserDeleteVO
+	if err := c.ShouldBindQuery(&deleteVO); err != nil {
 		_ = c.Error(berror.New(bcode.BadRequestInvalidInput, "输入内容错误或缺失"))
 		return
 	}
 	// 删除用户
 	var getUser *entity.User
-	constant.DB.First(&getUser, "uuid = ?", getQuery.UUID)
+	constant.DB.First(&getUser, "uuid = ?", deleteVO.UUID)
 	if getUser.UUID == uuid.Nil {
 		_ = c.Error(berror.New(bcode.BadRequestInvalidInput, "用户不存在"))
 		return
@@ -59,7 +59,7 @@ func Delete(c *gin.Context) {
 		_ = c.Error(berror.New(bcode.BadRequestInvalidInput, "不能删除自己"))
 		return
 	}
-	tx := constant.DB.Delete(&entity.User{}, "uuid = ?", getQuery.UUID)
+	tx := constant.DB.Delete(&entity.User{}, "uuid = ?", deleteVO.UUID)
 	if tx.Error != nil {
 		_ = c.Error(berror.New(bcode.ServerDatabaseError, "删除失败"))
 		return

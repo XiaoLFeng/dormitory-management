@@ -55,9 +55,9 @@ func Route(r *gin.Engine) *gin.Engine {
 			// 用户路由表
 			userGroup := needLogin.Group("/user")
 			{
+				userGroup.DELETE("", user.Delete)
 				userGroup.GET("/current", user.Current)
 				userGroup.GET("/list", user.List)
-				userGroup.DELETE("", user.Delete)
 			}
 		}
 	}
