@@ -19,13 +19,21 @@
  * --------------------------------------------------------------------------------
  */
 
-import {Route, Routes} from "react-router-dom";
-import {AUthLogin} from "./auth/auth_login.tsx";
-
-export function BaseAuth() {
-    return (
-        <Routes>
-            <Route path={"/login"} element={<AUthLogin/>}/>
-        </Routes>
-    );
+/**
+ * # 基本返回类型
+ * 用于返回数据的基本类型，包含输出、状态码、消息、错误消息、数据；
+ *
+ * @template T 返回数据类型
+ * @property {string} output 输出
+ * @property {number} code 状态码
+ * @property {string} message 消息
+ * @property {string} error_message 错误消息
+ * @property {T} data 数据
+ */
+export type BaseResponse<T> = {
+    output: string;
+    code: number;
+    message: string;
+    error_message?: string;
+    data?: T;
 }

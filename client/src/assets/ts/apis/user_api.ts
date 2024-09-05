@@ -19,13 +19,24 @@
  * --------------------------------------------------------------------------------
  */
 
-import {Route, Routes} from "react-router-dom";
-import {AUthLogin} from "./auth/auth_login.tsx";
+import {BaseApi, MethodType} from "../base_api.ts";
+import {AuthorizationUtil} from "../utils/authorization_util.ts";
+import {UserCurrentEntity} from "../model/entity/user_entity.ts";
+import {BaseResponse} from "../model/base_response.ts";
 
-export function BaseAuth() {
-    return (
-        <Routes>
-            <Route path={"/login"} element={<AUthLogin/>}/>
-        </Routes>
-    );
+/**
+ *
+ * @constructor
+ */
+const UserCurrentAPI = (): Promise<BaseResponse<UserCurrentEntity> | undefined> => {
+    return BaseApi<UserCurrentEntity>(
+        MethodType.GET,
+        "/api/v1/user/current",
+        null,
+        null,
+        null,
+        {"Authorization": AuthorizationUtil.getAuthorization()}
+    )
 }
+
+export {UserCurrentAPI}

@@ -19,13 +19,32 @@
  * --------------------------------------------------------------------------------
  */
 
-import {Route, Routes} from "react-router-dom";
-import {AUthLogin} from "./auth/auth_login.tsx";
+import {Route, Routes, useNavigate} from "react-router-dom";
+import {useEffect} from "react";
+import {AuthorizationUtil} from "../assets/ts/utils/authorization_util.ts";
+import {UserCurrentAPI} from "../assets/ts/apis/user_api.ts";
+import {BaseHome} from "./base_home.tsx";
+import {BaseAuth} from "./base_auth.tsx";
 
-export function BaseAuth() {
+export function BaseIndex() {
+    const navigate = useNavigate();
+
+    // 检查用户是否登录
+    useEffect(() => {
+        setTimeout(async () => {
+            if (AuthorizationUtil.getAuthorization() === "") {
+                console.debug("[Main] 用户未登录，跳转至登录页面");
+                const getData = await UserCurrentAPI();
+                if (getData?.output === "Deny") {
+                    navigate("/auth/login", {replace: true});
+                }
+            }
+        })
+    });
     return (
         <Routes>
-            <Route path={"/login"} element={<AUthLogin/>}/>
+            <Route path={"/"} element={<BaseHome/>}/>
+            <Route path={"/auth"} element={<BaseAuth/>}/>
         </Routes>
-    );
+    )
 }

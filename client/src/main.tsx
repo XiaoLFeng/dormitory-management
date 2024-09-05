@@ -1,11 +1,17 @@
 import "./assets/css/tailwind.css";
 
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import CustomRoute from "./custom_route.tsx";
+import {createRoot} from 'react-dom/client'
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BaseIndex} from "./view/base_index.tsx";
 
+/**
+ * # 根组件
+ * 用于渲柮整个应用，包括路由、全局状态等
+ */
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <CustomRoute/>
-  </StrictMode>,
+    <BrowserRouter>
+        <Routes>
+            <Route path={"/"} element={<BaseIndex/>}/>
+        </Routes>
+    </BrowserRouter>
 )

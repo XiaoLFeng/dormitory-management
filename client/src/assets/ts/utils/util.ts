@@ -19,13 +19,15 @@
  * --------------------------------------------------------------------------------
  */
 
-import {Route, Routes} from "react-router-dom";
-import {AUthLogin} from "./auth/auth_login.tsx";
+import {TypeUtil} from "./type_util.ts";
+import {AuthorizationUtil} from "./authorization_util.ts";
 
-export function BaseAuth() {
-    return (
-        <Routes>
-            <Route path={"/login"} element={<AUthLogin/>}/>
-        </Routes>
-    );
+/**
+ * # 工具类
+ * 用于存放一些工具方法，方便调用
+ *
+ * @author xiao_lfeng
+ */
+export class Util implements TypeUtil, AuthorizationUtil {
+
 }

@@ -19,13 +19,23 @@
  * --------------------------------------------------------------------------------
  */
 
-import {Route, Routes} from "react-router-dom";
-import {AUthLogin} from "./auth/auth_login.tsx";
+import {useEffect} from "react";
 
-export function BaseAuth() {
+/**
+ * # 基础首页
+ * 这是一个基础的首页，用于展示首页内容
+ *
+ * @returns React 函数组件
+ */
+export function BaseHome() {
+    useEffect(() => {
+        // 检查用户是否登录
+    }, []);
     return (
-        <Routes>
-            <Route path={"/login"} element={<AUthLogin/>}/>
-        </Routes>
+        <div>
+            <p className="text-3xl font-bold underline">
+                Hello world!
+            </p>
+        </div>
     );
 }

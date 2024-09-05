@@ -19,13 +19,10 @@
  * --------------------------------------------------------------------------------
  */
 
-import {Route, Routes} from "react-router-dom";
-import {AUthLogin} from "./auth/auth_login.tsx";
-
-export function BaseAuth() {
+export function AUthLogin() {
     return (
-        <Routes>
-            <Route path={"/login"} element={<AUthLogin/>}/>
-        </Routes>
+        <div>
+            <h1>登录</h1>
+        </div>
     );
 }

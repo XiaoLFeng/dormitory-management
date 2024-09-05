@@ -19,13 +19,9 @@
  * --------------------------------------------------------------------------------
  */
 
-import {Route, Routes} from "react-router-dom";
-import {AUthLogin} from "./auth/auth_login.tsx";
-
-export function BaseAuth() {
-    return (
-        <Routes>
-            <Route path={"/login"} element={<AUthLogin/>}/>
-        </Routes>
-    );
+export type UserCurrentEntity = {
+    uuid: string,
+    username: string,
+    created_at: Date,
+    updated_at: Date
 }

@@ -19,13 +19,41 @@
  * --------------------------------------------------------------------------------
  */
 
-import {Route, Routes} from "react-router-dom";
-import {AUthLogin} from "./auth/auth_login.tsx";
+/**
+ * # 类型工具类
+ * 用于存放一些类型判断方法，方便调用
+ */
+export class TypeUtil {
+    /**
+     * ## 判断是否为 null
+     * 用于判断传入的值是否为 null
+     *
+     * @param value 传入的值
+     * @returns 是否为 null
+     */
+    public static isNull(value: any): boolean {
+        return value === null;
+    }
 
-export function BaseAuth() {
-    return (
-        <Routes>
-            <Route path={"/login"} element={<AUthLogin/>}/>
-        </Routes>
-    );
+    /**
+     * ## 判断是否为 undefined
+     * 用于判断传入的值是否为 undefined
+     *
+     * @param value 传入的值
+     * @returns 是否为 undefined
+     */
+    public static isUndefined(value: any): boolean {
+        return value === undefined;
+    }
+
+    /**
+     * ## 判断是否为 null 或 undefined
+     * 用于判断传入的值是否为 null 或 undefined
+     *
+     * @param value 传入的值
+     * @returns 是否为 null 或 undefined
+     */
+    public static isNullOrUndefined(value: any): boolean {
+        return this.isNull(value) || this.isUndefined(value);
+    }
 }
