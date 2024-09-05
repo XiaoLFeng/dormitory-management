@@ -32,22 +32,18 @@ builds:
   - id: windows_amd64
     binary: dormitory-management
     main: .
+    env:
+      - CGO_ENABLED=1
     goos:
       - windows
     goarch:
       - amd64
 
-  - id: windows_arm64
-    binary: dormitory-management
-    main: .
-    goos:
-      - windows
-    goarch:
-      - arm64
-
   - id: darwin_amd64
     binary: dormitory-management
     main: .
+    env:
+      - CGO_ENABLED=1
     goos:
       - darwin
     goarch:
