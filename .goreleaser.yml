@@ -50,3 +50,11 @@ archives:
         format: binary
       - goos: linux
         format: binary
+
+changelog:
+  use: "git"          # 使用 Git 自动生成变更日志
+  sort: "asc"         # 按提交时间升序排列
+  filters:
+    exclude:
+      - '^docs:'      # 过滤掉以 'docs:' 开头的提交
+      - '^test:'      # 过滤掉以 'test:' 开头的提交
