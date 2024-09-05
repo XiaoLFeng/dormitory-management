@@ -41,39 +41,12 @@ builds:
     goarch:
       - amd64
 
-  - id: darwin_amd64
-    binary: dormitory-management
-    main: .
-    env:
-      - CGO_ENABLED=1
-      - CC=x86_64-apple-darwin20.3.0-clang   # 为 x86_64 (amd64) 架构指定 Clang 编译器
-      - CXX=x86_64-apple-darwin20.3.0-clang++  # 为 x86_64 (amd64) 架构指定 Clang++ 编译器
-    goos:
-      - darwin
-    goarch:
-      - amd64
-
-  - id: darwin_arm64
-    binary: dormitory-management
-    main: .
-    env:
-      - CGO_ENABLED=1
-      - CC=arm64-apple-darwin20.3.0-clang   # 为 ARM64 (arm64) 架构指定 Clang 编译器
-      - CXX=arm64-apple-darwin20.3.0-clang++  # 为 ARM64 (arm64) 架构指定 Clang++ 编译器
-    goos:
-      - darwin
-    goarch:
-      - arm64
-
 checksum:
   name_template: "checksums.txt"
 
-# 禁用 archives 以仅输出二进制文件
 archives:
   - format_overrides:
       - goos: windows
         format: binary
       - goos: linux
-        format: binary
-      - goos: darwin
         format: binary
