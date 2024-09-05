@@ -1,7 +1,7 @@
 import "./assets/css/tailwind.css";
 
 import {createRoot} from 'react-dom/client'
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter} from "react-router-dom";
 import {BaseIndex} from "./view/base_index.tsx";
 
 /**
@@ -10,8 +10,6 @@ import {BaseIndex} from "./view/base_index.tsx";
  */
 createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
-        <Routes>
-            <Route path={"/"} element={<BaseIndex/>}/>
-        </Routes>
+        <BaseIndex/>
     </BrowserRouter>
 )

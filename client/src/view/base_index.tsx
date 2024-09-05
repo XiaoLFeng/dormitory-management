@@ -19,7 +19,7 @@
  * --------------------------------------------------------------------------------
  */
 
-import {Route, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import {AuthorizationUtil} from "../assets/ts/utils/authorization_util.ts";
 import {UserCurrentAPI} from "../assets/ts/apis/user_api.ts";
@@ -28,15 +28,18 @@ import {BaseAuth} from "./base_auth.tsx";
 
 export function BaseIndex() {
     const navigate = useNavigate();
+    const location = useLocation();
 
     // 检查用户是否登录
     useEffect(() => {
         setTimeout(async () => {
-            if (AuthorizationUtil.getAuthorization() === "") {
-                console.debug("[Main] 用户未登录，跳转至登录页面");
-                const getData = await UserCurrentAPI();
-                if (getData?.output === "Deny") {
-                    navigate("/auth/login", {replace: true});
+            if (!location.pathname.startsWith("/auth")) {
+                if (AuthorizationUtil.getAuthorization() === "") {
+                    console.debug("[Main] 用户未登录，跳转至登录页面");
+                    const getData = await UserCurrentAPI();
+                    if (getData?.output === "Deny") {
+                        navigate("/auth", {replace: true});
+                    }
                 }
             }
         })
@@ -44,7 +47,7 @@ export function BaseIndex() {
     return (
         <Routes>
             <Route path={"/"} element={<BaseHome/>}/>
-            <Route path={"/auth"} element={<BaseAuth/>}/>
+            <Route path={"/auth/*"} element={<BaseAuth/>}/>
         </Routes>
     )
 }

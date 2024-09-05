@@ -19,26 +19,12 @@
  * --------------------------------------------------------------------------------
  */
 
-import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
-import {AuthLogin} from "./auth/auth_login.tsx";
-import {useEffect} from "react";
-import {AuthRegister} from "./auth/auth_register.tsx";
-
-export function BaseAuth() {
-    const location = useLocation();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        // 检查是否处于当前位置
-        if (location.pathname === "/auth") {
-            navigate("/auth/login");
-        }
-    }, []);
-
-    return (
-        <Routes>
-            <Route path={"/login"} element={<AuthLogin/>}/>
-            <Route path={"/register"} element={<AuthRegister/>}/>
-        </Routes>
-    );
+/**
+ * # 用户注册数据传输对象
+ * 用于传输用户注册数据, 包括用户名、密码、邀请码
+ */
+export type UserRegisterDTO = {
+    username: string,
+    password: string,
+    invitation_code: string
 }
