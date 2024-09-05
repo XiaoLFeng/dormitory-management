@@ -47,11 +47,14 @@ func Route(r *gin.Engine) *gin.Engine {
 			inviterGroup := needLogin.Group("/invite")
 			{
 				inviterGroup.POST("", invitation.Create)
+				inviterGroup.DELETE("", invitation.Delete)
+				inviterGroup.GET("/list", invitation.List)
 			}
 			// 用户路由表
 			userGroup := needLogin.Group("/user")
 			{
 				userGroup.GET("/current", user.Current)
+				userGroup.GET("/list", user.List)
 			}
 		}
 	}

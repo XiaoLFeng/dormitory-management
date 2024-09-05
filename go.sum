@@ -8,6 +8,8 @@ github.com/XiaoLFeng/go-gin-util v1.0.0-20240905071820 h1:g3X9yOfVNHdQB3HNnw2vF0
 github.com/XiaoLFeng/go-gin-util v1.0.0-20240905071820/go.mod h1:T/nC965H44m8BtRpOe+XTnD2rZcXYnIZ2v5vu3bvUc4=
 github.com/XiaoLFeng/go-gin-util v1.0.0-20240905072204 h1:ysJ9JZm+j9A3OZZxuh4P+tfLIbttx5tukDpxNFfoldw=
 github.com/XiaoLFeng/go-gin-util v1.0.0-20240905072204/go.mod h1:T/nC965H44m8BtRpOe+XTnD2rZcXYnIZ2v5vu3bvUc4=
+github.com/XiaoLFeng/go-gin-util v1.0.0-20240905123839 h1:4VMDzuNuCWZioeyEYfgkLPXbvk0duP4Fsv0jqY75NjM=
+github.com/XiaoLFeng/go-gin-util v1.0.0-20240905123839/go.mod h1:T/nC965H44m8BtRpOe+XTnD2rZcXYnIZ2v5vu3bvUc4=
 github.com/andybalholm/cascadia v1.3.2 h1:3Xi6Dw5lHF15JtdcmAHD3i1+T8plmv7BQ/nsViSLyss=
 github.com/andybalholm/cascadia v1.3.2/go.mod h1:7gtRlve5FxPPgIgX36uWBX58OdBsSS6lUvCFb+h7KvU=
 github.com/bytedance/sonic v1.12.2 h1:oaMFuRTpMHYLpCntGca65YWt5ny+wAceDERTkT2L9lg=
