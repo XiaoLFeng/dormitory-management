@@ -14,7 +14,14 @@ import (
 	"net/http"
 )
 
-// dr1003({"result":0,"msg":"密码错误","ret_code":1});
+// goRuntimeLoginSchoolNetwork
+//
+// # Go Runtime 登录校园网
+//
+// 通过 Go Runtime 的方式登录校园网，该方法会在晚上 11 点到早晨 6 点之间进行登录操作；
+// 如果用户数据为空，则会关闭自动登录任务；
+// 如果校园网已登录，则不会进行登录操作；
+// 如果校园网未登录，则会随机选择一个用户进行登录操作。
 func (r *runtime) goRuntimeLoginSchoolNetwork() func() {
 	return func() {
 		var campusUser []*entity.CampusNetworkUser

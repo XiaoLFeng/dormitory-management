@@ -21,7 +21,7 @@
 
 export function PageNotFounded() {
     return (
-        <div className="grid min-h-full min-w-full place-content-center px-4">
+        <div className="grid min-h-dvh w-dvw place-content-center px-4">
             <div className="text-center">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

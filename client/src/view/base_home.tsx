@@ -30,7 +30,8 @@ import {HomeUser} from "./home/home_user.tsx";
 import {HomeInvite} from "./home/home_invite.tsx";
 import {HomeSetting} from "./home/home_setting.tsx";
 import {PageNotFounded} from "./page_not_founded.tsx";
-import { HomeSchool } from "./home/home_school.tsx";
+import {HomeSchool} from "./home/home_school.tsx";
+import {AuthorizationUtil} from "../assets/ts/utils/authorization_util.ts";
 
 /**
  * # 基础首页
@@ -47,6 +48,9 @@ export function BaseHome() {
             const getData = await UserCurrentAPI();
             if (getData?.output === "Ok") {
                 setUserCurrent(getData.data!!);
+            } else {
+                AuthorizationUtil.removeAuthorization();
+                window.location.replace("/auth/login");
             }
         }, 0);
     }, []);

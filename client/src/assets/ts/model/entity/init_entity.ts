@@ -19,31 +19,8 @@
  * --------------------------------------------------------------------------------
  */
 
-import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
-import {AuthLogin} from "./auth/auth_login.tsx";
-import {useEffect} from "react";
-import {AuthRegister} from "./auth/auth_register.tsx";
-import {AuthorizationUtil} from "../assets/ts/utils/authorization_util.ts";
-
-export function BaseAuth() {
-    const location = useLocation();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        // 检查是否处于当前位置
-        if (location.pathname === "/auth") {
-            navigate("/auth/login");
-        }
-        // 如果用户已登录跳转页面
-        if (AuthorizationUtil.getAuthorization() !== "") {
-            navigate("/", {replace: true});
-        }
-    }, []);
-
-    return (
-        <Routes>
-            <Route path={"/login"} element={<AuthLogin/>}/>
-            <Route path={"/register"} element={<AuthRegister/>}/>
-        </Routes>
-    );
+type InitModeEntity = {
+    init_mode: boolean
 }
+
+export type {InitModeEntity}

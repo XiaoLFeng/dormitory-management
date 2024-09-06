@@ -25,6 +25,15 @@ import {AuthorizationUtil} from "../assets/ts/utils/authorization_util.ts";
 import {UserCurrentAPI} from "../assets/ts/apis/user_api.ts";
 import {BaseHome} from "./base_home.tsx";
 import {BaseAuth} from "./base_auth.tsx";
+import {InitModeAPI} from "../assets/ts/apis/init_api.ts";
+import {message} from "antd";
+import {HomeIndex} from "./home/home_index.tsx";
+import {HomeUser} from "./home/home_user.tsx";
+import {HomeInvite} from "./home/home_invite.tsx";
+import {HomeSchool} from "./home/home_school.tsx";
+import {HomeSetting} from "./home/home_setting.tsx";
+import {PageNotFounded} from "./page_not_founded.tsx";
+import {BaseInit} from "./base_init.tsx";
 
 export function BaseIndex() {
     const navigate = useNavigate();
@@ -33,21 +42,41 @@ export function BaseIndex() {
     // 检查用户是否登录
     useEffect(() => {
         setTimeout(async () => {
-            if (!location.pathname.startsWith("/auth")) {
-                if (AuthorizationUtil.getAuthorization() === "") {
-                    console.debug("[Main] 用户未登录，跳转至登录页面");
-                    const getData = await UserCurrentAPI();
-                    if (getData?.output === "Deny") {
-                        navigate("/auth", {replace: true});
+            // 检查是否初始化
+            const getData = await InitModeAPI();
+            console.log(getData!!.data);
+            if (getData?.output === "Ok") {
+                if (getData.data?.init_mode) {
+                    navigate("/init", {replace: true});
+                } else {
+                    if (!location.pathname.startsWith("/auth")) {
+                        if (AuthorizationUtil.getAuthorization() === "") {
+                            console.debug("[Main] 用户未登录，跳转至登录页面");
+                            const getData = await UserCurrentAPI();
+                            if (getData?.output === "Deny") {
+                                navigate("/auth", {replace: true});
+                            }
+                        }
                     }
                 }
+            } else {
+                message.warning("系统初始化失败，请联系管理员");
             }
         })
-    });
+    }, []);
+
     return (
         <Routes>
-            <Route path={"/*"} element={<BaseHome/>}/>
+            <Route path={"/"} element={<BaseHome/>}>
+                <Route path={"/"} element={<HomeIndex/>}/>
+                <Route path={"/user"} element={<HomeUser/>}/>
+                <Route path={"/invite"} element={<HomeInvite/>}/>
+                <Route path={"/school"} element={<HomeSchool/>}/>
+                <Route path={"/setting"} element={<HomeSetting/>}/>
+            </Route>
+            <Route path={"/init"} element={<BaseInit/>}/>
             <Route path={"/auth/*"} element={<BaseAuth/>}/>
+            <Route path={"/*"} element={<PageNotFounded/>}/>
         </Routes>
     )
 }

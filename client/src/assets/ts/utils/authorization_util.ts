@@ -57,4 +57,8 @@ export class AuthorizationUtil {
             cookie.set("Authorization", "Bearer " + token);
         }
     }
+
+    public static removeAuthorization(): void {
+        cookie.remove("Authorization");
+    }
 }
