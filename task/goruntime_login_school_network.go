@@ -6,6 +6,7 @@ import (
 	"dormitory-management/model/entity"
 	"encoding/json"
 	"github.com/PuerkitoBio/goquery"
+	"github.com/XiaoLFeng/go-general-utils/butil"
 	"github.com/XiaoLFeng/go-gin-util/blog"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"
@@ -76,13 +77,20 @@ func (r *runtime) goRuntimeLoginSchoolNetwork() func() {
 		})
 		if !hasLogin {
 			blog.Info("CRON", "校园网未登录，正在尝试登录...")
+			// 随机获取一位用户进行登录
+			i := rand.Intn(len(campusUser))
+
 			client, err := http.NewRequest("GET", "http://10.1.99.100:801/eportal/portal/login", nil)
 			if err != nil {
+				constant.DB.Create(&entity.Log{
+					LogUUID:    butil.GenerateUUID(),
+					User:       campusUser[i].User,
+					Log:        "创建登录请求失败：" + err.Error(),
+					RecordTime: time.Now(),
+				})
 				blog.Errorf("CRON", "创建登录请求失败: %v", err)
 				return
 			}
-			// 随机获取一位用户进行登录
-			i := rand.Intn(len(campusUser))
 			query := client.URL.Query()
 			query.Add("callback", "dr1003")
 			query.Add("login_method", "1")
@@ -93,11 +101,23 @@ func (r *runtime) goRuntimeLoginSchoolNetwork() func() {
 			blog.Trace("CRON", client.URL.String())
 			resp, err := http.DefaultClient.Do(client)
 			if err != nil {
+				constant.DB.Create(&entity.Log{
+					LogUUID:    butil.GenerateUUID(),
+					User:       campusUser[i].User,
+					Log:        "登录请求失败：" + err.Error(),
+					RecordTime: time.Now(),
+				})
 				blog.Errorf("CRON", "登录请求失败: %v", err)
 				return
 			}
 			defer func(Body io.ReadCloser) {
 				err := Body.Close()
+				constant.DB.Create(&entity.Log{
+					LogUUID:    butil.GenerateUUID(),
+					User:       campusUser[i].User,
+					Log:        "关闭响应体失败：" + err.Error(),
+					RecordTime: time.Now(),
+				})
 				if err != nil {
 					blog.Warnf("CRON", "关闭响应体失败: %s", err.Error())
 				}
@@ -106,6 +126,12 @@ func (r *runtime) goRuntimeLoginSchoolNetwork() func() {
 			// 对获取的数据进行清洗
 			readAll, err := io.ReadAll(resp.Body)
 			if err != nil {
+				constant.DB.Create(&entity.Log{
+					LogUUID:    butil.GenerateUUID(),
+					User:       campusUser[i].User,
+					Log:        "数据流信息获取失败：" + err.Error(),
+					RecordTime: time.Now(),
+				})
 				blog.Warnf("CRON", "数据流信息获取失败: %s", err.Error())
 			}
 			getData := string(readAll)[10 : len(string(readAll))-2]
@@ -114,10 +140,22 @@ func (r *runtime) goRuntimeLoginSchoolNetwork() func() {
 			var resultMap dto.SchoolLoginDTO
 			err = json.Unmarshal([]byte(getData), &resultMap)
 			if err != nil {
+				constant.DB.Create(&entity.Log{
+					LogUUID:    butil.GenerateUUID(),
+					User:       campusUser[i].User,
+					Log:        "JSON 数据解析失败：" + err.Error(),
+					RecordTime: time.Now(),
+				})
 				blog.Warnf("CRON", "JSON 数据解析失败")
 			}
 			// 检查是否登录成功
 			if resultMap.Result == 1 {
+				constant.DB.Create(&entity.Log{
+					LogUUID:    butil.GenerateUUID(),
+					User:       campusUser[i].User,
+					Log:        "登录成功",
+					RecordTime: time.Now(),
+				})
 				blog.Info("CRON", resultMap.Msg)
 			} else {
 				blog.Warnf("CRON", "%s - [%v]", resultMap.Msg, resultMap.RetCode)
