@@ -49,6 +49,7 @@ func Route(r *gin.Engine, staticFile embed.FS) *gin.Engine {
 				schoolGroup.DELETE("", school.Delete)
 				schoolGroup.GET("/has-login", school.HasLogin)
 				schoolGroup.POST("/auto-login", school.SetAutoLogin)
+				schoolGroup.GET("/auto-login", school.GetAutoLogin)
 			}
 			// 邀请路由表
 			inviterGroup := needLogin.Group("/invite")

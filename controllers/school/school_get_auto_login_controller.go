@@ -19,20 +19,24 @@
  * --------------------------------------------------------------------------------
  */
 
-package vo
+package school
 
-// SchoolSetAutoLoginVO
+import (
+	"dormitory-management/constant"
+	"dormitory-management/model/dto"
+	"github.com/XiaoLFeng/go-gin-util/bresult"
+	"github.com/gin-gonic/gin"
+)
+
+// GetAutoLogin
 //
-// # 校园网设置自动登录
+// # 获取自动登录
 //
-// 用于校园网设置自动登录的请求参数, 用于接收前端传递的设置自动登录的请求参数
-//
-// # 参数
-//   - SetAutoLogin 	是否设置自动登录(bool)
-//   - StartTime 		自动登录开始时间(string)
-//   - EndTime 			自动登录结束时间(string)
-type SchoolSetAutoLoginVO struct {
-	SetAutoLogin bool   `json:"auto_login" form:"auto_login" example:"true" description:"是否设置自动登录"`
-	StartTime    string `json:"start_time" binding:"required" form:"start_time" example:"08:00" description:"自动登录开始时间"`
-	EndTime      string `json:"end_time" binding:"required" form:"end_time" example:"23:00" description:"自动登录结束时间"`
+// 获取自动登录的状态，以及自动登录的开始时间和结束时间。
+func GetAutoLogin(c *gin.Context) {
+	bresult.OkWithData(c, "成功", &dto.SchoolAutoLoginDTO{
+		AutoLogin:      constant.AutoLogin,
+		LoginStartTime: constant.LoginStartTime,
+		LoginEndTime:   constant.LoginEndTime,
+	})
 }

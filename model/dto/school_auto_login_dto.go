@@ -19,20 +19,20 @@
  * --------------------------------------------------------------------------------
  */
 
-package vo
+package dto
 
-// SchoolSetAutoLoginVO
+// SchoolAutoLoginDTO
 //
-// # 校园网设置自动登录
+// # 学校自动登录数据传输对象
 //
-// 用于校园网设置自动登录的请求参数, 用于接收前端传递的设置自动登录的请求参数
+// 用于传输学校自动登录的数据，包括自动登录状态、开始时间和结束时间。
 //
 // # 参数
-//   - SetAutoLogin 	是否设置自动登录(bool)
-//   - StartTime 		自动登录开始时间(string)
-//   - EndTime 			自动登录结束时间(string)
-type SchoolSetAutoLoginVO struct {
-	SetAutoLogin bool   `json:"auto_login" form:"auto_login" example:"true" description:"是否设置自动登录"`
-	StartTime    string `json:"start_time" binding:"required" form:"start_time" example:"08:00" description:"自动登录开始时间"`
-	EndTime      string `json:"end_time" binding:"required" form:"end_time" example:"23:00" description:"自动登录结束时间"`
+//   - AutoLogin: bool 是否自动登录
+//   - LoginStartTime: string 自动登录开始时间
+//   - LoginEndTime: string 自动登录结束时间
+type SchoolAutoLoginDTO struct {
+	AutoLogin      bool   `json:"auto_login"`
+	LoginStartTime string `json:"start_time"`
+	LoginEndTime   string `json:"end_time"`
 }

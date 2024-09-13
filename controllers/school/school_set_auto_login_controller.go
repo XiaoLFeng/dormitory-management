@@ -39,7 +39,7 @@ import (
 // 设置自动登录，如果设置为 true 则表示开启自动登录，否则关闭自动登录。
 func SetAutoLogin(c *gin.Context) {
 	var loginVO vo.SchoolSetAutoLoginVO
-	if err := c.ShouldBindQuery(&loginVO); err != nil {
+	if err := c.ShouldBindBodyWithJSON(&loginVO); err != nil {
 		blog.Warnf("CONT", "设置自动登录失败: %v", err.Error())
 		_ = c.Error(berror.New(bcode.BadRequestInvalidInput, "输入内容错误或缺失"))
 		return
