@@ -27,6 +27,9 @@ import {AuthorizationUtil} from "../../assets/ts/utils/authorization_util.ts";
 import {message} from "antd";
 
 export function AuthLogin() {
+
+    document.title = "筱锋の宿舍管理 - 登录"
+
     const navigate = useNavigate();
     const [getParams] = useSearchParams();
 

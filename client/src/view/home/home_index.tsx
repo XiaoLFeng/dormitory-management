@@ -24,6 +24,9 @@ import {useEffect, useState} from "react";
 import {SchoolHasLoginAPI} from "../../assets/ts/apis/school_api.ts";
 
 export function HomeIndex() {
+
+    document.title = "筱锋の宿舍管理 - 概览";
+
     const [hasLogin, setHasLogin] = useState<boolean>(false);
 
     useEffect(() => {
@@ -78,28 +81,6 @@ export function HomeIndex() {
                     </div>
                     <div className={"mt-3 grid justify-center font-bold"}>
                         { hasLogin.toString() }
-                    </div>
-                </div>
-                <div className={"bg-white rounded-xl p-6 shadow-lg col-span-12 md:col-span-6"}>
-                    <div className={"font-bold flex items-center gap-3"}>
-                        <HomeOutlined/>
-                        <span>系统信息</span>
-                    </div>
-                    <div className={"mt-3 grid justify-center"}>
-                        <p>系统版本: 1.0.0</p>
-                        <p>系统作者: 筱锋</p>
-                        <p>系统协议: MIT</p>
-                    </div>
-                </div>
-                <div className={"bg-white rounded-xl p-6 shadow-lg col-span-12 md:col-span-6"}>
-                    <div className={"font-bold flex items-center gap-3"}>
-                        <HomeOutlined/>
-                        <span>系统信息</span>
-                    </div>
-                    <div className={"mt-3 grid justify-center"}>
-                        <p>系统版本: 1.0.0</p>
-                        <p>系统作者: 筱锋</p>
-                        <p>系统协议: MIT</p>
                     </div>
                 </div>
                 <div className={"bg-white rounded-xl p-6 shadow-lg col-span-12"}>

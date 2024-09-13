@@ -27,6 +27,9 @@ import {SchoolGetAutoLoginAPI, SchoolUpdateAutoLoginAPI} from "../../assets/ts/a
 import dayjs from "dayjs";
 
 export function HomeSetting() {
+
+    document.title = "筱锋の宿舍管理 - 系统设置";
+
     const autoLogin = useRef<SchoolAutoLoginDTO>({} as SchoolAutoLoginDTO);
     const [getForceUpdate, forceUpdate] = useState<number>(0);
 
@@ -113,6 +116,78 @@ export function HomeSetting() {
                         </div>
                     </div>
                 </form>
+            </div>
+            <div className={"bg-white rounded-xl p-6 shadow-lg grid grid-cols-12 gap-6"}>
+                <div className={"col-span-12 md:col-span-6"}>
+                    <div className={"text-xl font-bold"}>系统信息</div>
+                    <div className={"text-gray-500"}>用于查看系统的基本信息</div>
+                    <div className={"mt-3"}>
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+                                <thead className="text-left">
+                                <tr>
+                                    <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">系统</th>
+                                    <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">信息</th>
+                                </tr>
+                                </thead>
+
+                                <tbody className="divide-y divide-gray-200">
+                                <tr className="odd:bg-gray-50">
+                                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">CPU状态</td>
+                                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">10%</td>
+                                </tr>
+                                <tr className="odd:bg-gray-50">
+                                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">RAM状态</td>
+                                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">2048M / 4096M</td>
+                                </tr>
+                                <tr className="odd:bg-gray-50">
+                                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">磁盘IO状态</td>
+                                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">20%</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div className={"col-span-12 md:col-span-6"}>
+                    <div className={"text-xl font-bold"}>软件信息</div>
+                    <div className={"text-gray-500"}>用于查看本软件的系统信息配置</div>
+                    <div className={"mt-3"}>
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+                                <thead className="text-left">
+                                <tr>
+                                    <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">系统</th>
+                                    <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">信息</th>
+                                </tr>
+                                </thead>
+
+                                <tbody className="divide-y divide-gray-200">
+                                <tr className="odd:bg-gray-50">
+                                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">软件版本</td>
+                                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">v1.0.0</td>
+                                </tr>
+                                <tr className="odd:bg-gray-50">
+                                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">软件作者</td>
+                                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                                        <a href="https://www.x-lf.com/" target={"_blank"} className={"text-blue-500"}>
+                                            筱锋xiao_lfeng
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr className="odd:bg-gray-50">
+                                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">开源协议</td>
+                                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                                        <a href="https://opensource.org/licenses/MIT" target={"_blank"} className={"text-blue-500"}>
+                                            MIT
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -28,6 +28,9 @@ import {SchoolAddDTO} from "../../assets/ts/model/dto/school_add_dto.ts";
 import {NotificationPlacement} from "antd/es/notification/interface";
 
 export function HomeSchool() {
+
+    document.title = "筱锋の宿舍管理 - 校园网账号";
+
     const [createModalOpen, setCreateModalOpen] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const deleteUser = useRef<SchoolEntity>({} as SchoolEntity);

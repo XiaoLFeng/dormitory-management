@@ -26,6 +26,7 @@ import {UserDeleteAPI, UserListAPI} from "../../assets/ts/apis/user_api.ts";
 import {message} from "antd";
 
 export function HomeUser() {
+
     document.title = "筱锋の宿舍管理 - 用户";
 
     const [userList, setUserList] = useState({} as UserCurrentEntity[]);

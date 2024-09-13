@@ -28,6 +28,8 @@ import copy from "copy-to-clipboard";
 
 export function HomeInvite() {
 
+    document.title = "筱锋の宿舍管理 - 邀请码";
+
     const [inviteCode, setInviteCode] = useState({} as InviteCodeEntity[]);
     const [newCode, setNewCode] = useState({} as InviteCodeEntity);
     const [hasDelete, setHasDelete] = useState(false);

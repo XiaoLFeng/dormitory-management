@@ -26,6 +26,9 @@ import {message} from "antd";
 import {UserRegisterAPI} from "../../assets/ts/apis/auth_api.ts";
 
 export function AuthRegister() {
+
+    document.title = "筱锋の宿舍管理 - 注册"
+
     const navigate = useNavigate();
 
     const formRegister = useRef<UserRegisterDTO>({} as UserRegisterDTO);
