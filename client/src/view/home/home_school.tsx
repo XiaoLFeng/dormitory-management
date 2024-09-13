@@ -20,31 +20,57 @@
  */
 
 import {BookOutlined} from "@ant-design/icons";
-import {message, Modal} from "antd";
+import {message, Modal, notification} from "antd";
 import {JSX, useEffect, useRef, useState} from "react";
 import {SchoolCreateAPI, SchoolDeleteAPI, SchoolListAPI} from "../../assets/ts/apis/school_api.ts";
 import {SchoolEntity} from "../../assets/ts/model/entity/school_entity.ts";
 import {SchoolAddDTO} from "../../assets/ts/model/dto/school_add_dto.ts";
+import {NotificationPlacement} from "antd/es/notification/interface";
 
 export function HomeSchool() {
     const [createModalOpen, setCreateModalOpen] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const deleteUser = useRef<SchoolEntity>({} as SchoolEntity);
-    const [schoolList, setSchoolList] = useState({} as SchoolEntity[]);
-    const [hasCreate, setHasChange] = useState(false);
+    const [hasChange, setHasChange] = useState(false);
     const account = useRef<SchoolAddDTO>({} as SchoolAddDTO);
+    const rangeList = useRef([] as JSX.Element[]);
 
     useEffect(() => {
-        setHasChange(false);
         setTimeout(async () => {
             const getData = await SchoolListAPI();
             if (getData?.output === "Ok") {
-                setSchoolList(getData.data!!);
+                let list: JSX.Element[] = [];
+                for (let i = 0; i < getData.data!!.length; i++) {
+                    list[i] = (
+                        <tr className="odd:bg-gray-50" key={i}>
+                            <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{getData.data!![i].user}</td>
+                            <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{getData.data!![i].pass}</td>
+                            <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{getData.data!![i].type}</td>
+                            <td className="whitespace-nowrap px-4 py-2 text-gray-700 flex gap-3 justify-end">
+                                <button onClick={() => {
+
+                                }}
+                                        className={"px-3 py-1 bg-blue-500 text-white rounded-md transition hover:scale-105"}>
+                                    修改
+                                </button>
+                                <button onClick={() => {
+                                    setDeleteModalOpen(true);
+                                    deleteUser.current = getData.data!![i];
+                                }}
+                                        className={"px-3 py-1 bg-red-500 text-white rounded-md transition hover:scale-105"}>
+                                    删除
+                                </button>
+                            </td>
+                        </tr>
+                    );
+                }
+                rangeList.current = list;
             } else {
                 console.error(getData?.error_message);
             }
+            setHasChange(false);
         });
-    }, [hasCreate]);
+    }, [hasChange]);
 
     const handleOk = async () => {
         // 检查数据填写完整
@@ -54,9 +80,8 @@ export function HomeSchool() {
         }
         const getData = await SchoolCreateAPI(account.current);
         if (getData?.output === "Ok") {
-            setSchoolList(getData.data!!);
             setHasChange(true);
-            message.success("添加账号成功");
+            openNotification("topLeft", account.current.user, account.current.pass);
         } else {
             message.warning(getData?.error_message);
         }
@@ -74,37 +99,16 @@ export function HomeSchool() {
         setDeleteModalOpen(false);
     }
 
+    const openNotification = (placement: NotificationPlacement, user: string, pass: string) => {
+        notification.info({
+            message: `账号添加成功`,
+            description: `账号: ${user}，密码: ${pass}`,
+            placement,
+        });
+    };
+
     const handleCancel = () => setCreateModalOpen(false);
     const handleDeleteCancel = () => setDeleteModalOpen(false);
-
-    function RangeList(): JSX.Element[] {
-        let list: JSX.Element[] = [];
-        for (let i = 0; i < schoolList.length; i++) {
-            list[i] = (
-                <tr className="odd:bg-gray-50" key={i}>
-                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{schoolList[i].user}</td>
-                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{schoolList[i].pass}</td>
-                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{schoolList[i].type}</td>
-                    <td className="whitespace-nowrap px-4 py-2 text-gray-700 flex gap-3 justify-end">
-                        <button onClick={() => {
-
-                        }}
-                                className={"px-3 py-1 bg-blue-500 text-white rounded-md transition hover:scale-105"}>
-                            修改
-                        </button>
-                        <button onClick={() => {
-                            setDeleteModalOpen(true);
-                            deleteUser.current = schoolList[i];
-                        }}
-                                className={"px-3 py-1 bg-red-500 text-white rounded-md transition hover:scale-105"}>
-                            删除
-                        </button>
-                    </td>
-                </tr>
-            );
-        }
-        return list;
-    }
 
     return (
         <>
@@ -130,9 +134,7 @@ export function HomeSchool() {
                                 <th className="whitespace-nowrap px-4 py-2 text-gray-700 text-end">操作</th>
                             </tr>
                             </thead>
-                            <tbody className="divide-y divide-gray-200">
-                                <RangeList/>
-                            </tbody>
+                            <tbody className="divide-y divide-gray-200">{rangeList.current}</tbody>
                         </table>
                     </div>
                 </div>

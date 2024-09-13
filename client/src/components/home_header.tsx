@@ -51,7 +51,7 @@ export function HomeHeader() {
                         <li>
                             <Link className={backgroundColor("/")} to={"/"}>
                                 <HomeOutlined/>
-                                <span>首页</span>
+                                <span>概览</span>
                             </Link>
                             <Link className={backgroundColor("/school")} to={"/school"}>
                                 <BookOutlined/>

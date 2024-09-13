@@ -19,10 +19,96 @@
  * --------------------------------------------------------------------------------
  */
 
+import {CheckCircleOutlined, HomeOutlined} from "@ant-design/icons";
+import {useEffect, useState} from "react";
+import {SchoolHasLoginAPI} from "../../assets/ts/apis/school_api.ts";
+
 export function HomeIndex() {
+    const [hasLogin, setHasLogin] = useState<boolean>(false);
+
+    useEffect(() => {
+        setTimeout(async () => {
+            const getData = await SchoolHasLoginAPI();
+            if (getData?.output === "Ok") {
+                setHasLogin(getData.data!!.has_login);
+            } else {
+                console.warn(getData?.error_message);
+            }
+        })
+    }, []);
+
+    function LoginType(): JSX.Element {
+        if (hasLogin) {
+            return (
+                <div className={"text-green-500 font-bold flex items-center gap-1"}>
+                    <CheckCircleOutlined/>
+                    <span>已登录校园网</span>
+                </div>
+            );
+        } else {
+            return (
+                <div className={"text-red-500 font-bold flex items-center gap-1"}>
+                    <span>未登录校园网</span>
+                </div>
+            );
+        }
+    }
+
     return (
-        <div>
-            <h1>首页</h1>
+        <div className={"grid gap-3"}>
+            <div className={"text-2xl font-bold flex items-center gap-3"}>
+                <HomeOutlined/>
+                <span>概览</span>
+            </div>
+            <div className={"grid gap-3 grid-cols-12"}>
+                <div
+                    className={"bg-white rounded-xl p-6 shadow-lg col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3"}>
+                    <div className={"font-bold flex items-center gap-3"}>
+                        <HomeOutlined/>
+                        <span>校园网登录</span>
+                    </div>
+                    <div className={"mt-3 grid justify-center"}>
+                        <LoginType/>
+                    </div>
+                </div>
+                <div className={"bg-white rounded-xl p-6 shadow-lg col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3"}>
+                    <div className={"font-bold flex items-center gap-3"}>
+                        <HomeOutlined/>
+                        <span>登录账号</span>
+                    </div>
+                    <div className={"mt-3 grid justify-center font-bold"}>
+                        { hasLogin.toString() }
+                    </div>
+                </div>
+                <div className={"bg-white rounded-xl p-6 shadow-lg col-span-12 md:col-span-6"}>
+                    <div className={"font-bold flex items-center gap-3"}>
+                        <HomeOutlined/>
+                        <span>系统信息</span>
+                    </div>
+                    <div className={"mt-3 grid justify-center"}>
+                        <p>系统版本: 1.0.0</p>
+                        <p>系统作者: 筱锋</p>
+                        <p>系统协议: MIT</p>
+                    </div>
+                </div>
+                <div className={"bg-white rounded-xl p-6 shadow-lg col-span-12 md:col-span-6"}>
+                    <div className={"font-bold flex items-center gap-3"}>
+                        <HomeOutlined/>
+                        <span>系统信息</span>
+                    </div>
+                    <div className={"mt-3 grid justify-center"}>
+                        <p>系统版本: 1.0.0</p>
+                        <p>系统作者: 筱锋</p>
+                        <p>系统协议: MIT</p>
+                    </div>
+                </div>
+                <div className={"bg-white rounded-xl p-6 shadow-lg col-span-12"}>
+                    <div className={"font-bold flex items-center gap-3"}>
+                        <HomeOutlined/>
+                        <span>日志信息</span>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

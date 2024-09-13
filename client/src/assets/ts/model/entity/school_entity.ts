@@ -24,3 +24,7 @@ export type SchoolEntity = {
     pass: string;
     type: string;
 }
+
+export type SchoolHasLoginEntity = {
+    has_login: boolean;
+}

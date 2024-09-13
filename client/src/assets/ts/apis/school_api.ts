@@ -20,7 +20,7 @@
  */
 
 import {BaseResponse} from "../model/base_response.ts";
-import {SchoolEntity} from "../model/entity/school_entity.ts";
+import {SchoolEntity, SchoolHasLoginEntity} from "../model/entity/school_entity.ts";
 import {BaseApi, MethodType} from "../base_api.ts";
 import {AuthorizationUtil} from "../utils/authorization_util.ts";
 import {SchoolAddDTO} from "../model/dto/school_add_dto.ts";
@@ -78,8 +78,26 @@ const SchoolDeleteAPI = async (user: string): Promise<BaseResponse<void> | undef
     )
 }
 
+/**
+ * # 校园网账号是否登录
+ * 检查校园网账号是否登录
+ *
+ * @returns Promise<BaseResponse<boolean> | undefined>
+ */
+const SchoolHasLoginAPI = async (): Promise<BaseResponse<SchoolHasLoginEntity> | undefined> => {
+    return BaseApi<SchoolHasLoginEntity>(
+        MethodType.GET,
+        "/api/v1/school/has-login",
+        null,
+        null,
+        null,
+        {"Authorization": AuthorizationUtil.getAuthorization()}
+    )
+}
+
 export {
     SchoolListAPI,
     SchoolCreateAPI,
-    SchoolDeleteAPI
+    SchoolDeleteAPI,
+    SchoolHasLoginAPI
 }
