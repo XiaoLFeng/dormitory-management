@@ -14,6 +14,9 @@ func (i *Init) initData() {
 	insertInfoData("web_title", "筱锋网管")
 	insertInfoData("web_desc", "一个校园网自动登录系统")
 	insertInfoData("system_initial_mode", "true")
+	insertInfoData("system_auto_login", "true")
+	insertInfoData("system_auto_login_start_time", "08:00")
+	insertInfoData("system_auto_login_end_time", "23:00")
 }
 
 func insertInfoData(key, value string) {

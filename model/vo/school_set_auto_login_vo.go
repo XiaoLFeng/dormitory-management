@@ -21,14 +21,18 @@
 
 package vo
 
-// SchoolDeleteVO
+// SchoolSetAutoLoginVO
 //
-// # 校园网账号删除VO
+// # 校园网设置自动登录
 //
-// 用于校园网账号删除的VO，用于接收删除校园网账号的请求参数。
+// 用于校园网设置自动登录的请求参数, 用于接收前端传递的设置自动登录的请求参数
 //
 // # 参数
-//   - User		用户名(string)
-type SchoolDeleteVO struct {
-	User string `json:"user" form:"user" binding:"required" example:"admin" description:"用户名"`
+//   - SetAutoLogin 	是否设置自动登录(bool)
+//   - StartTime 		自动登录开始时间(string)
+//   - EndTime 			自动登录结束时间(string)
+type SchoolSetAutoLoginVO struct {
+	SetAutoLogin bool   `json:"auto_login" form:"auto_login" example:"true" description:"是否设置自动登录"`
+	StartTime    string `json:"start_time" form:"start_time" example:"08:00" description:"自动登录开始时间"`
+	EndTime      string `json:"end_time" form:"end_time" example:"23:00" description:"自动登录结束时间"`
 }

@@ -12,6 +12,7 @@ import (
 	"io"
 	"math/rand"
 	"net/http"
+	"time"
 )
 
 // goRuntimeLoginSchoolNetwork
@@ -24,13 +25,24 @@ import (
 // 如果校园网未登录，则会随机选择一个用户进行登录操作。
 func (r *runtime) goRuntimeLoginSchoolNetwork() func() {
 	return func() {
+		// 检查是否开启了自动登录
+		if !constant.AutoLogin {
+			blog.Trace("CRON", "自动登录已关闭")
+			return
+		}
+		// 根据全局变量的开始时间和结束时间进行决策
+		nowTime := time.Now()
+		if constant.LoginStartTime > nowTime.Format("15:04") || nowTime.Format("15:04") > constant.LoginEndTime {
+			blog.Trace("CRON", "不在登录时间范围内")
+			return
+		}
+		// 获取用户数据
 		var campusUser []*entity.CampusNetworkUser
 		constant.DB.Find(&campusUser)
 		if len(campusUser) == 0 {
-			blog.Debug("CRON", "用户数据为空，关闭自动校园网登录任务")
+			blog.Trace("CRON", "用户数据为空，关闭自动校园网登录任务")
 			return
 		}
-		// 检查时间是否超过晚上 11 点或在早晨 6 点前
 		blog.Info("CRON", "正在检查是否需要登录校园网...")
 		resp, err := http.Get("http://10.1.99.100")
 		if err != nil {
