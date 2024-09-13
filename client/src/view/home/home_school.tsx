@@ -34,6 +34,7 @@ export function HomeSchool() {
     const [hasChange, setHasChange] = useState(false);
     const account = useRef<SchoolAddDTO>({} as SchoolAddDTO);
     const rangeList = useRef([] as JSX.Element[]);
+    const [getForceUpdate, forceUpdate] = useState<number>(0);
 
     useEffect(() => {
         setTimeout(async () => {
@@ -65,6 +66,7 @@ export function HomeSchool() {
                     );
                 }
                 rangeList.current = list;
+                forceUpdate(1 + getForceUpdate);
             } else {
                 console.error(getData?.error_message);
             }

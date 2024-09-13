@@ -28,3 +28,9 @@ export type SchoolEntity = {
 export type SchoolHasLoginEntity = {
     has_login: boolean;
 }
+
+export type SchoolAutoLoginDTO = {
+    auto_login: boolean;
+    start_time: string;
+    end_time: string;
+}

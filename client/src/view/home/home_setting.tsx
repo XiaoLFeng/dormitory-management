@@ -20,8 +20,39 @@
  */
 
 import {SettingOutlined} from "@ant-design/icons";
+import {message, TimePicker} from "antd";
+import React, {useEffect, useRef, useState} from "react";
+import {SchoolAutoLoginDTO} from "../../assets/ts/model/entity/school_entity.ts";
+import {SchoolGetAutoLoginAPI, SchoolUpdateAutoLoginAPI} from "../../assets/ts/apis/school_api.ts";
+import dayjs from "dayjs";
 
 export function HomeSetting() {
+    const autoLogin = useRef<SchoolAutoLoginDTO>({} as SchoolAutoLoginDTO);
+    const [getForceUpdate, forceUpdate] = useState<number>(0);
+
+    useEffect(() => {
+        setTimeout(async () => {
+            const getData = await SchoolGetAutoLoginAPI();
+            if (getData?.output === "Ok") {
+                autoLogin.current = getData.data!!;
+                forceUpdate(1 + getForceUpdate);
+                console.log(autoLogin.current);
+            } else {
+                console.warn(getData?.error_message);
+            }
+        }, 1);
+    }, []);
+
+    async function updateAutoLogin(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        const getData = await SchoolUpdateAutoLoginAPI(autoLogin.current);
+        if (getData?.output === "Ok") {
+            message.success(`更新自动登录设置成功`);
+        } else {
+            message.warning(getData?.error_message);
+        }
+    }
+
     return (
         <div className={"grid gap-3"}>
             <div className={"text-2xl font-bold flex items-center gap-3"}>
@@ -29,31 +60,59 @@ export function HomeSetting() {
                 <span>系统设置</span>
             </div>
             <div className={"bg-white rounded-xl p-6 shadow-lg"}>
-                <div className={"grid grid-cols-12 gap-3"}>
+                <form onSubmit={updateAutoLogin} className={"grid grid-cols-12 gap-3"}>
                     <div className={"col-span-12"}>
                         <div className={"text-xl font-bold"}>自动登录设置</div>
-                        <div className={"text-gray-500"}>用于系统自动登录系统的登录配置系统</div>
+                        <div className={"text-gray-500"}>用于系统自动登录校园网的登录配置</div>
                     </div>
-                    <div className={"col-span-12 md:col-span-5"}>
-                        <label
-                            htmlFor="UserEmail"
-                            className="block overflow-hidden rounded-md border border-gray-200 px-3 py-2 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
-                        >
-                            <span className="text-xs font-medium text-gray-700"> Email </span>
-
-                            <input
-                                type="email"
-                                id="UserEmail"
-                                placeholder="anthony@rhcp.com"
-                                className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
-                            />
-                        </label>
+                    <div className={"col-span-12 md:col-span-5 grid gap-3"}>
+                        <div>
+                            <label htmlFor="HeadlineAct"
+                                   className="block text-sm font-medium text-gray-900">自动登录</label>
+                            <select
+                                name="HeadlineAct"
+                                id="HeadlineAct"
+                                value={autoLogin.current.auto_login ? "true" : "false"}
+                                onChange={(e) => {
+                                    autoLogin.current.auto_login = e.target.value === "true";
+                                    forceUpdate(1 + getForceUpdate);
+                                }}
+                                className="transition mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm border hover:border-blue-400"
+                            >
+                                <option value="true">开启</option>
+                                <option value="false">关闭</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label htmlFor="HeadlineAct"
+                                   className="block text-sm font-medium text-gray-900">开始时间</label>
+                            <TimePicker format={"HH:mm"} value={dayjs(autoLogin.current.start_time, "HH:mm")}
+                                        onChange={(e) => {
+                                            autoLogin.current.start_time = e.format("HH:mm");
+                                            forceUpdate(1 + getForceUpdate);
+                                        }}
+                                        className={"transition mt-1.5 hover:border hover:border-blue-400 w-full"}/>
+                        </div>
+                        <div>
+                            <label htmlFor="HeadlineAct"
+                                   className="block text-sm font-medium text-gray-900">结束时间</label>
+                            <TimePicker format={"HH:mm"} value={dayjs(autoLogin.current.end_time, "HH:mm")}
+                                        onChange={(e) => {
+                                            autoLogin.current.end_time = e.format("HH:mm");
+                                            forceUpdate(1 + getForceUpdate);
+                                        }}
+                                        className={"transition mt-1.5 hover:border hover:border-blue-400 w-full"}/>
+                        </div>
                     </div>
-                    <div className={"col-span-12 md:col-span-7 grid justify-end"}>
-                        <div className={"text-xl font-bold"}>自动登录设置</div>
-                        <div className={"text-gray-500"}>用于系统自动登录系统的登录配置系统</div>
+                    <div className={"hidden md:grid col-span-4"} />
+                    <div className={"col-span-12 md:col-span-3 grid"}>
+                        <div className={"grid w-full"}>
+                            <div className={"grid items-end justify-end"}>
+                                <button onClick={() => {}} className={"transition rounded bg-blue-500 text-white px-8 py-2 hover:bg-blue-600 active:bg-blue-700"}>提交</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     );

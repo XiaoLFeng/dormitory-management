@@ -20,7 +20,7 @@
  */
 
 import {BaseResponse} from "../model/base_response.ts";
-import {SchoolEntity, SchoolHasLoginEntity} from "../model/entity/school_entity.ts";
+import {SchoolAutoLoginDTO, SchoolEntity, SchoolHasLoginEntity} from "../model/entity/school_entity.ts";
 import {BaseApi, MethodType} from "../base_api.ts";
 import {AuthorizationUtil} from "../utils/authorization_util.ts";
 import {SchoolAddDTO} from "../model/dto/school_add_dto.ts";
@@ -95,9 +95,46 @@ const SchoolHasLoginAPI = async (): Promise<BaseResponse<SchoolHasLoginEntity> |
     )
 }
 
+/**
+ * # 校园网账号自动登录
+ * 自动登录校园网账号
+ *
+ * @returns Promise<BaseResponse<void> | undefined>
+ */
+const SchoolGetAutoLoginAPI = async (): Promise<BaseResponse<SchoolAutoLoginDTO> | undefined> => {
+    return BaseApi<SchoolAutoLoginDTO>(
+        MethodType.GET,
+        "/api/v1/school/auto-login",
+        null,
+        null,
+        null,
+        {"Authorization": AuthorizationUtil.getAuthorization()}
+    )
+}
+
+/**
+ * # 校园网账号自动登录更新
+ * 更新校园网账号自动登录
+ *
+ * @param autoLogin SchoolAutoLoginDTO 自动登录信息
+ * @returns Promise<BaseResponse<void> | undefined>
+ */
+const SchoolUpdateAutoLoginAPI = async (autoLogin: SchoolAutoLoginDTO): Promise<BaseResponse<void> | undefined> => {
+    return BaseApi<void>(
+        MethodType.POST,
+        "/api/v1/school/auto-login",
+        autoLogin,
+        null,
+        null,
+        {"Authorization": AuthorizationUtil.getAuthorization()}
+    )
+}
+
 export {
     SchoolListAPI,
     SchoolCreateAPI,
     SchoolDeleteAPI,
-    SchoolHasLoginAPI
+    SchoolHasLoginAPI,
+    SchoolGetAutoLoginAPI,
+    SchoolUpdateAutoLoginAPI
 }
